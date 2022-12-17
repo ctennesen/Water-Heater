@@ -1,9 +1,8 @@
 #define relay 3
 #define flowpin 8
-volatile int  flow_frequency;
-unsigned int  one_minuteL;
+volatile long flow_frequency;
+unsigned int one_minuteL;
 unsigned int one_minuteG;
-unsigned int rowReading;
 unsigned long currentTime, loopTime; 
 void getFlow ()
  {flow_frequency++;}
@@ -16,7 +15,7 @@ void setup()
   Serial.begin(9600);
   pinMode(flowpin, INPUT);
   digitalWrite(flowpin, HIGH);
-  attachInterrupt(0, getFlow, RISING);
+  attachInterrupt(0, getFlow, FALLING);
   sei();                             
   currentTime == millis();
   loopTime == currentTime;}
