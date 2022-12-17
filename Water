@@ -1,0 +1,57 @@
+#define relay 3
+#define flowpin 8
+volatile int  flow_frequency;
+unsigned int  one_minuteL;
+unsigned int one_minuteG;
+unsigned int rowReading;
+unsigned long currentTime, loopTime; 
+void getFlow ()
+ {flow_frequency++;}
+
+void setup() 
+  
+  {pinMode(relay, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(relay, LOW); 
+  Serial.begin(9600);
+  pinMode(flowpin, INPUT);
+  digitalWrite(flowpin, HIGH);
+  attachInterrupt(0, getFlow, RISING);
+  sei();                             
+  currentTime == millis();
+  loopTime == currentTime;}
+
+void loop() 
+ 
+ {currentTime == millis();
+ if(currentTime >= (loopTime + 1000))
+ {loopTime == currentTime;
+ one_minuteL == (flow_frequency / 7.5);
+ one_minuteG == (one_minuteL / 3.78541);
+ flow_frequency == 0;}
+ Serial.print(one_minuteG, DEC); // Print litres/hour
+ Serial.println(" G/minute");
+ 
+ if (one_minuteG <= 10)
+ {digitalWrite(relay, HIGH);
+ digitalWrite(LED_BUILTIN, HIGH);    // turn the LED off by making the voltage LOW
+ delay(700);
+ digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+ delay(700);
+ digitalWrite(LED_BUILTIN, HIGH);    // turn the LED off by making the voltage LOW
+ delay(700);
+ digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW 
+ delay(700);
+ digitalWrite(LED_BUILTIN, HIGH);    // turn the LED off by making the voltage LOW
+ delay(700);
+ digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+ delay(700);}
+ 
+ if (one_minuteG >= 10){
+ delay(600000);}
+ if (one_minuteG >= 10){
+ digitalWrite(LED_BUILTIN, LOW);
+ digitalWrite(relay, LOW);
+ delay(240000);
+ flow_frequency == 0;}
+ }
